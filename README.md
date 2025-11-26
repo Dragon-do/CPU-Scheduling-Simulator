@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="assets/banner.png" width="80%">
-</p>
+![image alt](https://raw.githubusercontent.com/Dragon-do/CPU-Scheduling-Simulator/7b0a7c472283dcf289dddc9304c5bd9d830d3c15/git.png)
 
 # CPU-Scheduling-Simulator
 We as a group of 2nd year B-Tech Students made a CPU Scheduling Simulator for our Operating System Project to showcase our skills in the particular domain.
