@@ -81,6 +81,9 @@ This simulator includes five widely used CPU scheduling algorithms. Each algorit
 | **Round Robin (RR)** | Preemptive (Time-Quantum Based) | Each process receives a fixed time slice in cyclic order, making it suitable for time-sharing systems. |
 | **Priority Scheduling** | Preemptive | Processes are executed based on priority value. Higher priority processes may preempt lower priority ones. |
 
+## User Interface Design
+
+![image alt](https://github.com/Dragon-do/CPU-Scheduling-Simulator/blob/main/os.jpg?raw=true)
 
 ## Learning Outcomes
 
