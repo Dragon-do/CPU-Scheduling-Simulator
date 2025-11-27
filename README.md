@@ -42,6 +42,46 @@ CLONE THE REPOSITORY
 git clone https://github.com/Dragon-do/CPU-Scheduling-Simulator.git
 cd CPU-Scheduling-Simulator
 ```
+## Features
+
+Fully implemented CPU scheduling algorithms:
+
+° FCFS
+
+° SJF (Non-Preemptive)
+
+° SRTF (Preemptive)
+
+° Round Robin
+
+° Priority Scheduling
+
+Generates:
+
+° Gantt charts
+
+° Comparison tables
+
+° Performance metrics
+
+° Modular, extendable architecture
+
+° Beginner-friendly and educational
+
+
+##  Algorithms Implemented
+
+This simulator includes five widely used CPU scheduling algorithms. Each algorithm simulates process execution, generates a Gantt chart, and calculates key metrics such as Waiting Time, Turnaround Time, Response Time, and Throughput.
+
+| Algorithm | Type | Description |
+|----------|------|-------------|
+| **FCFS (First Come First Serve)** | Non-Preemptive | Processes are scheduled based on arrival time. Simple and fair but may lead to convoy effect. |
+| **SJF (Shortest Job First)** | Non-Preemptive | The process with the shortest burst time is executed first. Provides optimal average waiting time for non-preemptive scheduling. |
+| **SRTF (Shortest Remaining Time First)** | Preemptive | Dynamic form of SJF. If a new process arrives with a shorter burst time, it preempts the current process. |
+| **Round Robin (RR)** | Preemptive (Time-Quantum Based) | Each process receives a fixed time slice in cyclic order, making it suitable for time-sharing systems. |
+| **Priority Scheduling** | Preemptive | Processes are executed based on priority value. Higher priority processes may preempt lower priority ones. |
+
+
 ## Learning Outcomes
 
 1) Deepened understanding of CPU scheduling mechanisms.
@@ -55,4 +95,14 @@ cd CPU-Scheduling-Simulator
 ## Acknowledgment
 
 This project was successfully completed under the mentorship of Prof. Shantanu Agnihotri, whose guidance helped us understand and implement CPU scheduling algorithms both theoretically and practically.
+##  Use Cases
+
+- Operating System courses and labs
+- Visualization tool for scheduling research
+- Academic demonstrations and viva presentations
+- Basis for extending to:
+  - Multilevel Queue Scheduling
+  - Real-Time Scheduling (EDF, RMS)
+
+
 
