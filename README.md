@@ -83,7 +83,7 @@ This simulator includes five widely used CPU scheduling algorithms. Each algorit
 
 ## User Interface Design
 
-![image alt](https://github.com/Dragon-do/CPU-Scheduling-Simulator/blob/main/os.jpg?raw=true)
+![image alt]
 
 ## Learning Outcomes
 
