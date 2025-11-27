@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>CPU Scheduler Pro</title>
+
+ 
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+ 
+  <link rel="stylesheet" href="style.css" />
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+</head>
+<body>
+  <div class="container">
+   
+    <aside class="sidebar">
+      <h2>CPU Scheduler Pro</h2>
+
+      <div class="section">
+        <label>Configuration</label>
+        
+        <select id="arrivalTime">
+          <option value="arrival" selected>Arrival Time</option>
+          <option value="manual">Manual Arrival</option>
+          <option value="random">Random Arrival</option>
+        </select>
+        <br /><br />
+        <button id="addProcess">+ Add Process</button>
+      </div>
+
+      <div class="section">
+        <label>Process Queue</label>
+        <div id="processList"></div>
+      </div>
+
+      <div class="section">
+        <label>Algorithm Selection</label>
+        <div class="radio-group">
+          <label><input type="radio" name="alg" value="FCFS" checked /> FCFS</label>
+          <label><input type="radio" name="alg" value="SJF" /> SJF</label>
+          <label><input type="radio" name="alg" value="SRTF" /> SRTF</label>
+          <label><input type="radio" name="alg" value="PRIORITY" /> Priority Scheduling</label>
+          <label><input type="radio" name="alg" value="RR" /> Round Robin</label>
+
+          <span class="quantum-label">Time Quantum</span>
+          <input type="number" id="quantum" value="4" min="1" class="quantum-box" />
+        </div>
+      </div>
+
+      <button class="run" id="runSim">Run Simulation</button>
+      <button class="clear" id="clearAll">Clear All Processes</button>
+
+      <div class="lightmode">
+        <label>Light Mode</label>
+        <input type="checkbox" id="toggleLightmode" />
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="results-head">
+        <h3 id="resultTitle">Results: FCFS</h3>
+      </div>
+
+      <div class="gantt-section">
+        <div style="margin-bottom:8px;font-weight:600;color:var(--muted)">Gantt Chart</div>
+        <canvas id="ganttChart" height="110"></canvas>
+      </div>
+
+      <div class="summary-section">
+        <div class="summary-box">
+          <span>Average Turnaround Time</span>
+          <div id="avgTurn" class="summary-value">0.00</div>
+        </div>
+
+        <div class="summary-box">
+          <span>Average Waiting Time</span>
+          <div id="avgWait" class="summary-value">0.00</div>
+        </div>
+      </div>
+
+      <div class="results-table-section">
+        <div style="margin-bottom:8px;font-weight:600;color:var(--muted)">Detailed Results</div>
+
+        <table class="results-table" aria-label="Detailed results">
+          <thead>
+            <tr>
+              <th>PID</th>
+              <th>Arrival</th>
+              <th>Burst</th>
+              <th>Completion</th>
+              <th>Turnaround</th>
+              <th>Waiting</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+
+        <div id="evalSummary" class="eval-summary-box"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Local JS -->
+  <script src="script.js"></script>
+
+  
+  <script>
+    (function initUI() {
+      const qLabel = document.querySelector('.quantum-label');
+      const qBox = document.getElementById('quantum');
+    
+      qLabel.style.display = 'none';
+      qBox.style.display = 'none';
+    })();
+  </script>
+</body>
+</html>
