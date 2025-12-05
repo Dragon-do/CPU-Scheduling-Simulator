@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function deepCopy(arr) { return JSON.parse(JSON.stringify(arr)); }
 
-  // --- algorithms
+  //  algorithms
   function fcfs(pi) {
     let p = deepCopy(pi).sort((a, b) => a.arrival - b.arrival);
     let t = 0;
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return p;
   }
 
-  // --- UI rows (manual arrival ) ---
+  //  UI rows (manual arrival )
   function renderProcesses() {
     const list = document.getElementById("processList");
     list.innerHTML = "";
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
     renderProcesses(); renderResults(); renderGantt();
   };
 
-  // --- results table ---
+  //  results table 
   function renderResults() {
     let html = "";
     processes.forEach(p=>{
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
     evalDiv.innerHTML = summary;
   }
 
-  // --- render gantt: 
+  // render gantt: 
   function renderGantt() {
     if (typeof Chart === "undefined") return;
     const isLight = document.body.classList.contains("light-mode");
@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // --- events 
+  //  events 
   document.getElementById("addProcess").onclick = () => {
     if (processes.length >= 12) return alert("Max 12 processes allowed for demo");
     const pid = P${processes.length + 1};
