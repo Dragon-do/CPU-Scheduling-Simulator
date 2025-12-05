@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function deepCopy(arr) { return JSON.parse(JSON.stringify(arr)); }
 
- 
+  // --- algorithms
   function fcfs(pi) {
     let p = deepCopy(pi).sort((a, b) => a.arrival - b.arrival);
     let t = 0;
@@ -101,14 +101,14 @@ document.addEventListener("DOMContentLoaded", function () {
     return p;
   }
 
-  
+  // --- UI rows (manual arrival ) ---
   function renderProcesses() {
     const list = document.getElementById("processList");
     list.innerHTML = "";
     processes.forEach((p, idx) => {
       const arrivalHtml = arrivalMode === "manual"
-        ? `<input type="number" class="input-arrival" value="${p.arrival}" min="0" style="width:72px;padding:6px;border-radius:6px;border:1px solid rgba(0,0,0,0.06);margin-right:6px" onchange="updateArrival(${idx}, this.value)" />`
-        : `<span style="min-width:34px;color:var(--muted);font-weight:600">${p.arrival}</span>`;
+        ? <input type="number" class="input-arrival" value="${p.arrival}" min="0" style="width:72px;padding:6px;border-radius:6px;border:1px solid rgba(0,0,0,0.06);margin-right:6px" onchange="updateArrival(${idx}, this.value)" />
+        : <span style="min-width:34px;color:var(--muted);font-weight:600">${p.arrival}</span>;
 
       list.innerHTML += `
       <div class="process-row">
@@ -132,11 +132,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.removeProcess = function(idx) {
     processes.splice(idx,1);
-    processes.forEach((p,i)=>p.pid = `P${i+1}`);
+    processes.forEach((p,i)=>p.pid = P${i+1});
     renderProcesses(); renderResults(); renderGantt();
   };
 
-
+  // --- results table ---
   function renderResults() {
     let html = "";
     processes.forEach(p=>{
@@ -162,15 +162,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const alg = document.querySelector("input[name='alg']:checked")?.value;
     if (!processes.length || !alg) { evalDiv.innerHTML = ""; return; }
     let summary = "";
-    if (alg === "RR") summary = `<strong>Round Robin performed fairly</strong> because:<ul><li>All processes receive equal CPU time slices (quantum)</li><li>Short processes may experience moderate waiting, but responsiveness is balanced</li></ul>`;
-    else if (alg === "FCFS") summary = `<strong>FCFS performed adequately</strong> because:<ul><li>Processes are served in order of arrival</li><li>No preemption, can cause the 'convoy effect'</li></ul>`;
-    else if (alg === "SJF") summary = `<strong>SJF performed well</strong> because:<ul><li>Shortest job is selected first leading to lower average waiting and turnaround time</li><li>May starve long processes</li></ul>`;
-    else if (alg === "SRTF") summary = `<strong>SRTF performed best</strong> because:<ul><li>Preemption allows short tasks to finish sooner</li><li>Minimizes waiting/turnaround in many cases</li></ul>`;
-    else if (alg === "PRIORITY") summary = `<strong>Priority Scheduling performed as expected</strong> because:<ul><li>Processes with higher priority run first</li><li>Use aging to prevent starvation</li></ul>`;
+    if (alg === "RR") summary = <strong>Round Robin performed fairly</strong> because:<ul><li>All processes receive equal CPU time slices (quantum)</li><li>Short processes may experience moderate waiting, but responsiveness is balanced</li></ul>;
+    else if (alg === "FCFS") summary = <strong>FCFS performed adequately</strong> because:<ul><li>Processes are served in order of arrival</li><li>No preemption, can cause the 'convoy effect'</li></ul>;
+    else if (alg === "SJF") summary = <strong>SJF performed well</strong> because:<ul><li>Shortest job is selected first leading to lower average waiting and turnaround time</li><li>May starve long processes</li></ul>;
+    else if (alg === "SRTF") summary = <strong>SRTF performed best</strong> because:<ul><li>Preemption allows short tasks to finish sooner</li><li>Minimizes waiting/turnaround in many cases</li></ul>;
+    else if (alg === "PRIORITY") summary = <strong>Priority Scheduling performed as expected</strong> because:<ul><li>Processes with higher priority run first</li><li>Use aging to prevent starvation</li></ul>;
     evalDiv.innerHTML = summary;
   }
 
-  
+  // --- render gantt: 
   function renderGantt() {
     if (typeof Chart === "undefined") return;
     const isLight = document.body.classList.contains("light-mode");
@@ -204,34 +204,34 @@ document.addEventListener("DOMContentLoaded", function () {
         meta.data.forEach((bar, i) => {
           const val = chart.data.datasets[0].data[i];
           const text = String(val);
-          
-          const barRight = bar.x; 
-          const barLeft = bar.base;
+          // For horizontal bars:
+          const barRight = bar.x; // pixel x of the value end
+          const barLeft = bar.base; // pixel x of baseline
           const barTop = bar.y - (bar.height/2);
           const barH = Math.max(12, bar.height - 4);
           const barWidthPx = Math.abs(barRight - barLeft);
 
-          
+          // measure
           const padding = 6;
           const textW = ctx.measureText(text).width;
           const boxW = textW + padding*2;
           const boxH = 18;
 
-          
+          // decide inside or outside
           let boxX, textX, textY = bar.y + 4;
           if (barWidthPx > boxW + 12) {
-            
+            // inside: place inside near end (right - boxW - 6)
             boxX = Math.min(barLeft, barRight) + barWidthPx - boxW - 6;
-         
+            // ensure not negative
             boxX = Math.max(boxX, Math.min(barLeft, barRight) + 4);
-          
+            // draw pill
             ctx.fillStyle = isLight ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.6)';
             roundRect(ctx, boxX, bar.y - (boxH/2) + 1, boxW, boxH, 6);
             ctx.fill();
             ctx.fillStyle = isLight ? '#052233' : '#ffffff';
             ctx.fillText(text, boxX + padding, textY);
           } else {
-          
+            // outside: to the right of bar
             boxX = Math.max(barLeft, barRight) + 8;
             ctx.fillStyle = isLight ? 'rgba(255,255,255,0.95)' : 'rgba(0,0,0,0.6)';
             roundRect(ctx, boxX, bar.y - (boxH/2) + 1, boxW, boxH, 6);
@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
 
-    
+    // helper 
     function roundRect(ctx, x, y, w, h, r) {
       ctx.beginPath();
       ctx.moveTo(x + r, y);
@@ -279,9 +279,9 @@ document.addEventListener("DOMContentLoaded", function () {
             bodyColor: isLight ? "#052233" : "#d8e6ff",
             borderColor: isLight ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.04)",
             borderWidth: 1,
-            callbacks: { label: ctx => `${ctx.raw}` }
+            callbacks: { label: ctx => ${ctx.raw} }
           }
-       
+          // no ChartDataLabels used here
         },
         scales: {
           x: { beginAtZero: true, grid: { color: isLight ? "rgba(10,20,30,0.06)" : "#2a3340" }, ticks: { color: isLight ? "#163245" : "#bfc9d9" } },
@@ -295,10 +295,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
- 
+  // --- events 
   document.getElementById("addProcess").onclick = () => {
     if (processes.length >= 12) return alert("Max 12 processes allowed for demo");
-    const pid = `P${processes.length + 1}`;
+    const pid = P${processes.length + 1};
     let arrival;
     if (arrivalMode === "manual") {
       arrival = processes.length ? Math.max(...processes.map(p=>p.arrival)) + 1 : 0;
@@ -314,7 +314,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (alg === "PRIORITY") {
       for (let p of processes) {
         if (typeof p.priority === "undefined") {
-          let input = prompt(`Enter priority for ${p.pid} (lower = higher priority):`, "1");
+          let input = prompt(Enter priority for ${p.pid} (lower = higher priority):, "1");
           p.priority = parseInt(input) || 1;
         }
       }
@@ -325,9 +325,13 @@ document.addEventListener("DOMContentLoaded", function () {
     else if (alg === "SRTF") result = srtf(processes);
     else if (alg === "PRIORITY") result = priorityScheduling(processes);
     else result = roundRobin(processes, q);
-    result.forEach((r,i)=> Object.assign(processes[i], r));
-    const titles = { FCFS:"FCFS", SJF:"SJF", SRTF:"SRTF", PRIORITY:"Priority Scheduling", RR:`Round Robin (Q=${q})` };
-    document.getElementById("resultTitle").innerText = `Results: ${titles[alg] || alg}`;
+    // Copy back computed fields — match by PID so fields attach to the correct process row
+    result.forEach((r, i) => {
+       Object.assign(processes[i], r);
+    });
+    
+    const titles = { FCFS:"FCFS", SJF:"SJF", SRTF:"SRTF", PRIORITY:"Priority Scheduling", RR:Round Robin (Q=${q}) };
+    document.getElementById("resultTitle").innerText = Results: ${titles[alg] || alg};
     renderProcesses(); renderResults(); renderGantt();
   };
 
@@ -363,6 +367,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelector(".quantum-label").style.display = "none";
   document.getElementById("quantum").style.display = "none";
 
- 
+  // initial
   renderProcesses(); renderResults(); renderGantt();
 });
